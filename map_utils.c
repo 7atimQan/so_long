@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:44:58 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/28 10:56:10 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:35:28 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ t_point	find_player(char **map)
 			j = 0;
 			if (map[i][j] == 'P')
 			{
-				player.x = i;
-				player.y = j;
+				player.x = j;
+				player.y = i;
 				return (player);
 			}
 			j++;
@@ -101,13 +101,13 @@ t_point	find_player(char **map)
 	return (player);
 }
 
-void	flood_fill(char **map, t_point pos, char **visited)
+void flood_fill(char **map, t_point pos, char **visited)
 {
-	if (map[pos.y][pos.x] == '1' || visited[pos.y][pos.x] == '1')
-		return ;
-	visited[pos.y][pos.x] = '1';
-	flood_fill(map, (t_point){pos.x + 1, pos.y}, visited);
-	flood_fill(map, (t_point){pos.x - 1, pos.y}, visited);
-	flood_fill(map, (t_point){pos.x, pos.y + 1}, visited);
-	flood_fill(map, (t_point){pos.x, pos.y - 1}, visited);
+    if (map[pos.y][pos.x] == '1' || visited[pos.y][pos.x] == 'V')
+        return;
+    visited[pos.y][pos.x] = 'V';
+    flood_fill(map, (t_point){pos.x + 1, pos.y}, visited);
+    flood_fill(map, (t_point){pos.x - 1, pos.y}, visited);
+    flood_fill(map, (t_point){pos.x, pos.y + 1}, visited);
+    flood_fill(map, (t_point){pos.x, pos.y - 1}, visited);
 }

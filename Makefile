@@ -8,7 +8,7 @@ PRINTF_DIR   = ft_printf
 LIBFT    = $(LIBFT_DIR)/libft.a
 PRINTF   = $(PRINTF_DIR)/libftprintf.a
 
-SRCS = map_pars.c map_utils.c \
+SRCS = map_pars.c map_utils.c map_utils2.c \
        gnl/get_next_line.c gnl/get_next_line_utils.c \
        ft_printf/ft_printf.c ft_printf/print_char.c \
        ft_printf/print_hexa.c ft_printf/print_num.c \

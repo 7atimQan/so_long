@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:01:10 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/28 10:51:00 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:42:00 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,23 @@ int	has_elements(char **map)
 
 int	validate_map(char **map)
 {
-	
+	t_point	pos;
+	char	**visited;
+
+	pos = find_player(map);
+	if (!is_rectangular(map) || !check_walls(map) || !has_elements(map))
+		return (0);
+	visited = duplicate_map(map);
+	if (!visited)
+		return (0);
+	flood_fill(map, pos, visited);
+	if (!check_valid_path(visited))
+	{
+		free_map(visited);
+		return (0);
+	}
+	free_map(visited);
+	return (0);
 }
 int	main(void)
 {
@@ -113,7 +129,7 @@ int	main(void)
 
 	i = 0;
 	test = return_map("file1.ber");
-	if (test && is_rectangular(test) && check_walls(test) && has_elements(test))
+	if (validate_map(test))
 	{
 		ft_printf("Map is valid \n\n");
 		while (test[i] != NULL)
@@ -125,5 +141,4 @@ int	main(void)
 	else
 		ft_printf("Invalid Map\n");
 	free_map(test);
-	return (0);
 }
