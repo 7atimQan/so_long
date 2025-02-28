@@ -6,25 +6,11 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:01:10 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/28 11:42:00 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:26:47 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	ber_check(char *filename)
-{
-	char	*ext;
-
-	printf("%s : ", filename);
-	ext = ft_strrchr(filename, '.');
-	if (ext && ft_strlen(ext) == 4)
-	{
-		if (ft_strlen(filename) > 4 && ft_strncmp(ext, ".ber", 4) == 0)
-			return (1);
-	}
-	return (0);
-}
 
 int	is_rectangular(char **map)
 {
@@ -104,41 +90,44 @@ int	has_elements(char **map)
 
 int	validate_map(char **map)
 {
-	t_point	pos;
+	int		x;
+	int		y;
 	char	**visited;
 
-	pos = find_player(map);
 	if (!is_rectangular(map) || !check_walls(map) || !has_elements(map))
 		return (0);
+	find_player(map, &x, &y);
 	visited = duplicate_map(map);
 	if (!visited)
 		return (0);
-	flood_fill(map, pos, visited);
+	flood_fill(map, x, y, visited);
 	if (!check_valid_path(visited))
 	{
 		free_map(visited);
 		return (0);
 	}
 	free_map(visited);
-	return (0);
+	return (1);
 }
+
 int	main(void)
 {
 	int		i;
 	char	**test;
 
 	i = 0;
-	test = return_map("file1.ber");
-	if (validate_map(test))
+	test = return_map("file1.be");
+	if (!validate_map(test))
 	{
-		ft_printf("Map is valid \n\n");
-		while (test[i] != NULL)
-		{
-			ft_printf("%s\n", test[i]);
-			i++;
-		}
-	}
-	else
 		ft_printf("Invalid Map\n");
+		free_map(test);
+		return (0);
+	}
+	ft_printf("Map is valid \n\n");
+	while (test[i] != NULL)
+	{
+		ft_printf("%s\n", test[i]);
+		i++;
+	}
 	free_map(test);
 }
