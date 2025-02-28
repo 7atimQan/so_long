@@ -8,4 +8,13 @@
 # include <fcntl.h>
 # include <string.h>
 
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
+void	free_map(char **map);
+char	**return_map(char *filename);
+
 #endif

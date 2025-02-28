@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:44:58 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/27 10:09:41 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:46:00 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,32 @@ void	free_map(char **map)
 		i++;
 	}
 	free(map);
+}
+
+t_point	find_player(char **map)
+{
+	t_point	player;
+	int	i;
+	int	j;
+
+	i = 0;
+	player.x = -1;
+	player.y = -1;
+	while(map[i])
+	{
+		j = 0;
+		while (map[i])
+		{
+			j = 0;
+			if (map[i][j] == 'P')
+			{
+				player.x = i;
+				player.y = j;
+				return (player);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (player);
 }

@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:01:10 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/27 10:09:36 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:22:55 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_rectangular(char **map)
 	int		i;
 	size_t	len;
 
-	if(!map || !map[0])
+	if (!map || !map[0])
 		return (0);
 	len = ft_strlen(map[0]);
 	i = 0;
