@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:01:10 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/28 10:22:55 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:51:00 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,17 +102,10 @@ int	has_elements(char **map)
 	return (0);
 }
 
-void	flood_fill(char **map, int x, int y, char **visited)
+int	validate_map(char **map)
 {
-	if (map[y][x] == '1' || visited[x][y] == '1')
-		return ;
-	visited[y][x] = '1';
-	flood_fill(map, x + 1, y, visited);
-	flood_fill(map, x - 1, y, visited);
-	flood_fill(map, x, y + 1, visited);
-	flood_fill(map, x, y - 1, visited);
+	
 }
-
 int	main(void)
 {
 	int		i;

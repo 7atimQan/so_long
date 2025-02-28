@@ -39,6 +39,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-mclean : all clean
+mc : all clean
 
 re: fclean all

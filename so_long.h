@@ -16,5 +16,7 @@ typedef struct s_point
 
 void	free_map(char **map);
 char	**return_map(char *filename);
+t_point	find_player(char **map);
+void	flood_fill(char **map, t_point pos, char **visited);
 
 #endif

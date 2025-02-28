@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:44:58 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/28 10:46:00 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:56:10 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	free_map(char **map)
 	int	i;
 
 	if (!map)
-		return;
+		return ;
 	i = 0;
 	while (map[i])
 	{
@@ -76,13 +76,13 @@ void	free_map(char **map)
 t_point	find_player(char **map)
 {
 	t_point	player;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	player.x = -1;
 	player.y = -1;
-	while(map[i])
+	while (map[i])
 	{
 		j = 0;
 		while (map[i])
@@ -99,4 +99,15 @@ t_point	find_player(char **map)
 		i++;
 	}
 	return (player);
+}
+
+void	flood_fill(char **map, t_point pos, char **visited)
+{
+	if (map[pos.y][pos.x] == '1' || visited[pos.y][pos.x] == '1')
+		return ;
+	visited[pos.y][pos.x] = '1';
+	flood_fill(map, (t_point){pos.x + 1, pos.y}, visited);
+	flood_fill(map, (t_point){pos.x - 1, pos.y}, visited);
+	flood_fill(map, (t_point){pos.x, pos.y + 1}, visited);
+	flood_fill(map, (t_point){pos.x, pos.y - 1}, visited);
 }
