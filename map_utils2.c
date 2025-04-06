@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_utils.c                                       :+:      :+:    :+:   */
+/*   map_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:08:50 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/28 12:29:16 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:22:24 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int	ber_check(char *filename)
 {
 	char	*ext;
 
-	// printf("%s : ", filename);
 	ext = ft_strrchr(filename, '.');
 	if (ext && ft_strlen(ext) == 4)
 	{
 		if (ft_strlen(filename) > 4 && ft_strncmp(ext, ".ber", 4) == 0)
 			return (1);
 	}
-	return (0);
+	print_error(5);
+	exit(1);
 }
 
 char	*read_file_to_string(int fd)
@@ -60,10 +60,13 @@ char	**return_map(char *filename)
 	char	*to_split;
 	char	**map;
 
-	if (!ber_check(filename))
-		return (NULL);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
+	{
+		print_error(6);
+		exit(1);
+	}
+	if (!ber_check(filename))
 		return (NULL);
 	to_split = read_file_to_string(fd);
 	close(fd);
@@ -72,7 +75,7 @@ char	**return_map(char *filename)
 	map = ft_split(to_split, '\n');
 	free(to_split);
 	if (!map)
-        return (NULL);
+		return (NULL);
 	return (map);
 }
 

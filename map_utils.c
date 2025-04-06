@@ -6,11 +6,31 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:44:58 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/28 12:32:09 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:26:29 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+
+void	print_error(int n)
+{
+	write (2, "Error\n", 6);
+	if (n == 0)
+		write(2, "Empty map\n", 10);
+	else if (n == 1)
+		write(2, "Not rectangular\n", 16);
+	else if (n == 2)
+		write(2, "Not surrounded by walls\n", 24);
+	else if (n == 3)
+		write(2, "Incorrect elements\n", 19);
+	else if (n == 4)
+		write(2, "Invalid path\n", 13);
+	else if (n == 5)
+		write(2, "Not a \".ber\" file\n", 18);
+	else if (n == 6)
+		write(2, "File does not exist\n", 20);
+}
 
 void	free_map(char **map)
 {
@@ -44,7 +64,6 @@ void	find_player(char **map, int *x, int *y)
 			{
 				*x = j;
 				*y = i;
-				ft_printf("Player found at (%d, %d)\n", *x, *y);
 				return ;
 			}
 			j++;

@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:01:10 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/28 12:26:47 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:36:28 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_rectangular(char **map)
 	while (map[i] != NULL)
 	{
 		if (ft_strlen(map[i]) != len || map[i][0] == '\n')
-			return (0);
+			return (print_error(1), 0);
 		i++;
 	}
 	return (1);
@@ -36,8 +36,6 @@ int	check_walls(char **map)
 	int	last_column;
 	int	last_row;
 
-	if (!map || !map[0])
-		return (0);
 	last_row = 0;
 	while (map[last_row + 1])
 		last_row++;
@@ -46,14 +44,35 @@ int	check_walls(char **map)
 	while (i <= last_column)
 	{
 		if (map[0][i] != '1' || map[last_row][i] != '1')
-			return (0);
+			return (print_error(2), 0);
 		i++;
 	}
 	i = 0;
 	while (map[i])
 	{
 		if (map[i][0] != '1' || map[i][last_column] != '1')
-			return (0);
+			return (print_error(2), 0);
+		i++;
+	}
+	return (1);
+}
+
+int	foreign_elements(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != 'P'
+				&& map[i][j] != 'E' && map[i][j] != 'C')
+				return (0);
+			j++;
+		}
 		i++;
 	}
 	return (1);
@@ -64,28 +83,27 @@ int	has_elements(char **map)
 	int	e;
 	int	c;
 	int	p;
-	int	i;
 	int	j;
+	int	i;
 
-	(1) & (e = 0, c = 0, p = 0, i = 0);
-	while (map[i])
+	e = 0;
+	c = 0;
+	p = 0;
+	i = -1;
+	while (map[++i])
 	{
-		j = 0;
-		while (map[i][j])
+		j = -1;
+		while (map[i][++j])
 		{
 			if (map[i][j] == 'P')
 				p++;
-			if (map[i][j] == 'E')
+			else if (map[i][j] == 'E')
 				e++;
-			if (map[i][j] == 'C')
+			else if (map[i][j] == 'C')
 				c++;
-			j++;
 		}
-		i++;
 	}
-	if (e == 1 && c >= 1 && p == 1)
-		return (1);
-	return (0);
+	return (e == 1 && c >= 1 && p == 1);
 }
 
 int	validate_map(char **map)
@@ -94,8 +112,12 @@ int	validate_map(char **map)
 	int		y;
 	char	**visited;
 
-	if (!is_rectangular(map) || !check_walls(map) || !has_elements(map))
+	if (!map || !map[0])
+		return (print_error(0), 0);
+	if (!is_rectangular(map) || !check_walls(map))
 		return (0);
+	if (!has_elements(map) || !foreign_elements(map))
+		return (print_error(3), 0);
 	find_player(map, &x, &y);
 	visited = duplicate_map(map);
 	if (!visited)
@@ -104,30 +126,8 @@ int	validate_map(char **map)
 	if (!check_valid_path(visited))
 	{
 		free_map(visited);
-		return (0);
+		return (print_error(4), 0);
 	}
 	free_map(visited);
 	return (1);
-}
-
-int	main(void)
-{
-	int		i;
-	char	**test;
-
-	i = 0;
-	test = return_map("file1.be");
-	if (!validate_map(test))
-	{
-		ft_printf("Invalid Map\n");
-		free_map(test);
-		return (0);
-	}
-	ft_printf("Map is valid \n\n");
-	while (test[i] != NULL)
-	{
-		ft_printf("%s\n", test[i]);
-		i++;
-	}
-	free_map(test);
 }
