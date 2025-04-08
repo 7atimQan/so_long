@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:44:58 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/06 16:26:29 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:15:23 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,12 @@ void	free_map(char **map)
 	free(map);
 }
 
-void	find_player(char **map, int *x, int *y)
+void	find_elements(t_map **map_info, char **map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	*x = -1;
-	*y = -1;
 	while (map[i])
 	{
 		j = 0;
@@ -62,9 +60,13 @@ void	find_player(char **map, int *x, int *y)
 		{
 			if (map[i][j] == 'P')
 			{
-				*x = j;
-				*y = i;
-				return ;
+				(*map_info)->player_x = j;
+				(*map_info)->player_y = i;
+			}
+			if (map[i][j] == 'E')
+			{
+				(*map_info)->exit_x = j;
+				(*map_info)->exit_y = i;
 			}
 			j++;
 		}
@@ -72,24 +74,17 @@ void	find_player(char **map, int *x, int *y)
 	}
 }
 
-void	flood_fill(char **map, int x, int y, char **visited)
+void	flood_fill(t_map *info, char **map, int x, int y, char **visited)
 {
-	int	height;
-	int	width;
-
-	height = 0;
-	while (map[height])
-		height++;
-	width = ft_strlen(map[0]);
-	if (x < 0 || y < 0 || y >= height || x >= width)
+	if (x < 0 || y < 0 || y >= info->height || x >= info->width)
 		return ;
 	if (map[y][x] == '1' || visited[y][x] == 'V')
 		return ;
 	visited[y][x] = 'V';
-	flood_fill(map, x + 1, y, visited);
-	flood_fill(map, x - 1, y, visited);
-	flood_fill(map, x, y + 1, visited);
-	flood_fill(map, x, y - 1, visited);
+	flood_fill(info, map, x + 1, y, visited);
+	flood_fill(info, map, x - 1, y, visited);
+	flood_fill(info, map, x, y + 1, visited);
+	flood_fill(info, map, x, y - 1, visited);
 }
 
 int	check_valid_path(char **map)

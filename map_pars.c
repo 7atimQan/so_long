@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:01:10 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/06 16:36:28 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:24:28 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,14 @@ int	foreign_elements(char **map)
 	return (1);
 }
 
-int	has_elements(char **map)
+int	has_elements(t_map **info, char **map)
 {
 	int	e;
-	int	c;
 	int	p;
 	int	j;
 	int	i;
 
 	e = 0;
-	c = 0;
 	p = 0;
 	i = -1;
 	while (map[++i])
@@ -100,29 +98,29 @@ int	has_elements(char **map)
 			else if (map[i][j] == 'E')
 				e++;
 			else if (map[i][j] == 'C')
-				c++;
+				((*info)->c_count)++;
 		}
 	}
-	return (e == 1 && c >= 1 && p == 1);
+	return (e == 1 && (*info)->c_count >= 1 && p == 1);
 }
 
-int	validate_map(char **map)
+int	validate_map(t_map **info, char **map)
 {
-	int		x;
-	int		y;
 	char	**visited;
-
+	
+	(*info)->c_count = 0;
 	if (!map || !map[0])
 		return (print_error(0), 0);
 	if (!is_rectangular(map) || !check_walls(map))
 		return (0);
-	if (!has_elements(map) || !foreign_elements(map))
+	if (!has_elements(info, map) || !foreign_elements(map))
 		return (print_error(3), 0);
-	find_player(map, &x, &y);
-	visited = duplicate_map(map);
+	find_elements(info, map);
+	height_width(info, map);
+	visited = duplicate_map(*info, map);
 	if (!visited)
 		return (0);
-	flood_fill(map, x, y, visited);
+	flood_fill(*info, map, (*info)->player_x, (*info)->player_y, visited);
 	if (!check_valid_path(visited))
 	{
 		free_map(visited);

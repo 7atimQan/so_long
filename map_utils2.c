@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:08:50 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/06 16:22:24 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 10:54:07 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,28 +79,36 @@ char	**return_map(char *filename)
 	return (map);
 }
 
-char	**duplicate_map(char **map)
+void	height_width(t_map **map_info, char **map)
 {
-	int		rows;
+	int	i;
+
+	i = 0;
+	while (map[i])
+		i++;
+	(*map_info)->width = ft_strlen(map[0]);
+	(*map_info)->height = i;
+}
+
+char	**duplicate_map(t_map *map_info, char **map)
+{
 	int		i;
 	char	**new_map;
 
-	rows = 0;
-	while (map[rows])
-		rows++;
-	new_map = malloc(sizeof(char *) * (rows + 1));
+	new_map = malloc(sizeof(char *) * (map_info->height + 1));
 	if (!new_map)
 		return (NULL);
 	i = 0;
-	while (i < rows)
+	while (i < map_info->height)
 	{
 		new_map[i] = ft_strdup(map[i]);
 		if (!new_map[i])
 		{
 			free_map(new_map);
+			return (NULL);
 		}
 		i++;
 	}
-	new_map[rows] = NULL;
+	new_map[i] = NULL;
 	return (new_map);
 }
