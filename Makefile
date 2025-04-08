@@ -8,7 +8,7 @@ PRINTF_DIR   = ft_printf
 LIBFT    = $(LIBFT_DIR)/libft.a
 PRINTF   = $(PRINTF_DIR)/libftprintf.a
 
-SRCS = map_pars.c map_utils.c map_utils2.c render_map.c main.c\
+SRCS = map_pars.c map_utils.c map_utils2.c render_map.c main.c move_player.c\
        gnl/get_next_line.c gnl/get_next_line_utils.c \
 
 OBJS = $(SRCS:.c=.o)

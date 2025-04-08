@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:55:37 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/08 16:22:42 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:50:36 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,23 @@
 
 void	full_free(t_map *game)
 {
-	mlx_destroy_image(game->mlx, game->bg_img);
-	mlx_destroy_image(game->mlx, game->coll_img);
-	mlx_destroy_image(game->mlx, game->player_img);
-	mlx_destroy_image(game->mlx, game->wall_img);
-	mlx_destroy_image(game->mlx, game->exit_img);
-	mlx_destroy_window(game->mlx, game->window);
-	mlx_destroy_display(game->mlx);
+	if (game->bg_img)
+		mlx_destroy_image(game->mlx, game->bg_img);
+	if (game->coll_img)
+		mlx_destroy_image(game->mlx, game->coll_img);
+	if (game->player_img)
+		mlx_destroy_image(game->mlx, game->player_img);
+	if (game->wall_img)
+		mlx_destroy_image(game->mlx, game->wall_img);
+	if (game->exit_img)
+		mlx_destroy_image(game->mlx, game->exit_img);
+	if (game->window)
+		mlx_destroy_window(game->mlx, game->window);
+	if (game->mlx)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
 	free_map(game->map);
 	free(game);
 }
@@ -32,7 +42,7 @@ void	error_exit(t_map *game, int n)
 	exit(1);
 }
 
-void	close_window(t_map *game)
+int	close_window(t_map *game)
 {
 	full_free(game);
 	exit(0);
@@ -75,8 +85,8 @@ void	render_map(t_map *game)
 				mlx_put_image_to_window(game->mlx, game->window, game->wall_img,
 					x * 64, y * 64);
 			else if (game->map[y][x] == '0')
-				mlx_put_image_to_window(game->mlx, game->window, game->bg_img, x
-					* 64, y * 64);
+				mlx_put_image_to_window(game->mlx, game->window, game->bg_img,
+					x * 64, y * 64);
 			else if (game->map[y][x] == 'P')
 				mlx_put_image_to_window(game->mlx, game->window,
 					game->player_img, x * 64, y * 64);

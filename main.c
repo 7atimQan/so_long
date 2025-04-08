@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 14:26:35 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/08 16:23:45 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:39:28 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	main(int argc, char **argv)
 	}
 	xpm_to_img(map_info);
 	render_map(map_info);
+	map_info->move_count = 0;
+	mlx_hook(map_info->window, 17, 1L >> 0, close_window, map_info);
+	mlx_hook(map_info->window, 2, 1L >> 0, key_hook, map_info);
 	mlx_loop(map_info->mlx);
-	close_window(map_info);
-	// free(map_info);
-	// free_map(map_info->map);
 }

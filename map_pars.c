@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:01:10 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/08 16:17:38 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:41:07 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int	has_elements(t_map **info, char **map)
 				((*info)->c_count)++;
 		}
 	}
-	ft_printf("Collectibles : %d\n", (*info)->c_count);
 	return (e == 1 && (*info)->c_count >= 1 && p == 1);
 }
 

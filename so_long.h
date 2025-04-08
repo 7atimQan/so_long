@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:22:05 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/08 16:23:56 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:36:34 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_map
 	void	*exit_img;
 	void	*wall_img;
 	void	*bg_img;
+	int		move_count;
 }	t_map;
 
 void	print_error(int n);
@@ -49,7 +50,8 @@ char	**duplicate_map(t_map *map_info, char **map);
 int		check_valid_path(char **map);
 int		validate_map(t_map **map_info, char **map);
 void	full_free(t_map *game);
-void	close_window(t_map *game);
+int		close_window(t_map *game);
+int		key_hook(int key_code, t_map *game);
 
 void	xpm_to_img(t_map *game);
 void	render_map(t_map *game);
