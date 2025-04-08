@@ -6,16 +6,15 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:44:58 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/08 11:15:23 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:54:51 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-
 void	print_error(int n)
 {
-	write (2, "Error\n", 6);
+	write(2, "Error\n", 6);
 	if (n == 0)
 		write(2, "Empty map\n", 10);
 	else if (n == 1)
@@ -30,6 +29,8 @@ void	print_error(int n)
 		write(2, "Not a \".ber\" file\n", 18);
 	else if (n == 6)
 		write(2, "File does not exist\n", 20);
+	else if (n == 7)
+		ft_putstr_fd("Failed to render map\n", 2);
 }
 
 void	free_map(char **map)
@@ -74,17 +75,17 @@ void	find_elements(t_map **map_info, char **map)
 	}
 }
 
-void	flood_fill(t_map *info, char **map, int x, int y, char **visited)
+void	flood_fill(t_map *info, int x, int y, char **visited)
 {
 	if (x < 0 || y < 0 || y >= info->height || x >= info->width)
 		return ;
-	if (map[y][x] == '1' || visited[y][x] == 'V')
+	if (info->map[y][x] == '1' || visited[y][x] == 'V')
 		return ;
 	visited[y][x] = 'V';
-	flood_fill(info, map, x + 1, y, visited);
-	flood_fill(info, map, x - 1, y, visited);
-	flood_fill(info, map, x, y + 1, visited);
-	flood_fill(info, map, x, y - 1, visited);
+	flood_fill(info, x + 1, y, visited);
+	flood_fill(info, x - 1, y, visited);
+	flood_fill(info, x, y + 1, visited);
+	flood_fill(info, x, y - 1, visited);
 }
 
 int	check_valid_path(char **map)

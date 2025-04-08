@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:22:05 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/08 12:15:14 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:23:56 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include "ft_printf/ft_printf.h"
 # include "gnl/get_next_line.h"
 # include "libft/libft.h"
-# include <fcntl.h>
-# include <string.h>
 
 typedef struct s_map
 {
@@ -32,22 +30,28 @@ typedef struct s_map
 	void	*mlx;
 	void	*window;
 	char	**map;
-	void	*collectible_img;
+	void	*coll_img;
 	void	*player_img;
 	void	*exit_img;
 	void	*wall_img;
-	void	*space_img;
+	void	*bg_img;
 }	t_map;
 
+void	print_error(int n);
 void	free_map(char **map);
-char	**return_map(char *filename);
-void	find_elements(t_map **map_info, char **map);
-void	flood_fill(t_map *info, char **map, int x, int y, char **visited);
+
 void	height_width(t_map **map_info, char **map);
+char	**return_map(char *filename);
+
+void	find_elements(t_map **map_info, char **map);
+void	flood_fill(t_map *info, int x, int y, char **visited);
+char	**duplicate_map(t_map *map_info, char **map);
 int		check_valid_path(char **map);
 int		validate_map(t_map **map_info, char **map);
-char	**duplicate_map(t_map *map_info, char **map);
-void	print_error(int n);
+void	full_free(t_map *game);
+void	close_window(t_map *game);
+
 void	xpm_to_img(t_map *game);
+void	render_map(t_map *game);
 
 #endif

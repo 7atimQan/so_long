@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 14:26:35 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/08 12:06:45 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:23:45 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	main(int argc, char **argv)
 {
-	char	**test;
 	t_map	*map_info;
 
 	if (argc == 1)
@@ -22,13 +21,16 @@ int	main(int argc, char **argv)
 	map_info = malloc(sizeof(t_map));
 	if (!map_info)
 		return (print_error(0), 0);
-	test = return_map(argv[1]);
-	if (!validate_map(&map_info, test))
+	map_info->map = return_map(argv[1]);
+	if (!validate_map(&map_info, map_info->map))
 	{
 		free(map_info);
-		return (free_map(test), 1);
+		return (free_map(map_info->map), 1);
 	}
 	xpm_to_img(map_info);
-	free(map_info);
-	free_map(test);
+	render_map(map_info);
+	mlx_loop(map_info->mlx);
+	close_window(map_info);
+	// free(map_info);
+	// free_map(map_info->map);
 }

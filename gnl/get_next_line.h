@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:25:23 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/12 14:20:31 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:55:56 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h>
 
 size_t	ft_strlen(char const*s);
 char	*ft_strdup(char const *s);

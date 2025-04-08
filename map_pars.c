@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:01:10 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/08 11:24:28 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:17:38 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,14 @@ int	has_elements(t_map **info, char **map)
 				((*info)->c_count)++;
 		}
 	}
+	ft_printf("Collectibles : %d\n", (*info)->c_count);
 	return (e == 1 && (*info)->c_count >= 1 && p == 1);
 }
 
 int	validate_map(t_map **info, char **map)
 {
 	char	**visited;
-	
+
 	(*info)->c_count = 0;
 	if (!map || !map[0])
 		return (print_error(0), 0);
@@ -120,7 +121,7 @@ int	validate_map(t_map **info, char **map)
 	visited = duplicate_map(*info, map);
 	if (!visited)
 		return (0);
-	flood_fill(*info, map, (*info)->player_x, (*info)->player_y, visited);
+	flood_fill(*info, (*info)->player_x, (*info)->player_y, visited);
 	if (!check_valid_path(visited))
 	{
 		free_map(visited);
