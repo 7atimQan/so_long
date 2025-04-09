@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:14:06 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/02/03 09:31:10 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:47:50 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*new_remainder(char *remainder)
 		return (NULL);
 	}
 	rem = ft_strdup(remainder + i);
+	if (!rem)
+		return (NULL);
 	free(remainder);
 	return (rem);
 }
@@ -92,6 +94,12 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*remainder;
 
+	if (fd == -1)
+	{
+		free(remainder);
+		remainder = NULL;
+		return (NULL);
+	}
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	remainder = read_buffer(fd, remainder);
@@ -101,22 +109,3 @@ char	*get_next_line(int fd)
 	remainder = new_remainder(remainder);
 	return (line);
 }
-
-// int	main(void)
-// {
-// 	char	*result;
-// 	int		fd;
-// 	int		i;
-
-// 	i = 0;
-// 	fd = open("file1.txt", O_RDONLY);
-// 	printf("%d\n", fd);
-// 	printf("%d\n", BUFFER_SIZE);
-// 	while ((result = get_next_line(fd)) != NULL)
-// 	{
-// 		printf("%d/ %s", i++, result);
-// 		free(result);
-// 	}
-// 	printf("\n");
-// 	close(fd);
-// }

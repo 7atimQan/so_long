@@ -6,24 +6,30 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:08:50 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/08 10:54:07 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:55:34 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ber_check(char *filename)
+void	ber_check(t_map *game, char *filename)
 {
 	char	*ext;
+	char	*name;
 
 	ext = ft_strrchr(filename, '.');
-	if (ext && ft_strlen(ext) == 4)
+	name = ft_strrchr(filename, '/');
+	if (!name)
 	{
 		if (ft_strlen(filename) > 4 && ft_strncmp(ext, ".ber", 4) == 0)
-			return (1);
+			return ;
 	}
-	print_error(5);
-	exit(1);
+	else if (ext && ft_strlen(ext) == 4)
+	{
+		if (ft_strlen(name) > 5 && ft_strncmp(ext, ".ber", 4) == 0)
+			return ;
+	}
+	error_exit(game, 5);
 }
 
 char	*read_file_to_string(int fd)
@@ -42,6 +48,7 @@ char	*read_file_to_string(int fd)
 		{
 			free(line);
 			free(to_split);
+			get_next_line(-1);
 			return (NULL);
 		}
 		temp = to_split;
@@ -50,11 +57,10 @@ char	*read_file_to_string(int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
-	free(line);
 	return (to_split);
 }
 
-char	**return_map(char *filename)
+char	**return_map(t_map *game, char *filename)
 {
 	int		fd;
 	char	*to_split;
@@ -62,16 +68,12 @@ char	**return_map(char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-	{
-		print_error(6);
-		exit(1);
-	}
-	if (!ber_check(filename))
-		return (NULL);
+		error_exit(game, 6);
+	ber_check(game, filename);
 	to_split = read_file_to_string(fd);
 	close(fd);
 	if (!to_split)
-		return (NULL);
+		error_exit(game, 0);
 	map = ft_split(to_split, '\n');
 	free(to_split);
 	if (!map)

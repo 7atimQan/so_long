@@ -6,7 +6,7 @@
 /*   By: hqannouc <hqannouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:44:58 by hqannouc          #+#    #+#             */
-/*   Updated: 2025/04/08 13:54:51 by hqannouc         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:57:09 by hqannouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	print_error(int n)
 {
 	write(2, "Error\n", 6);
+	if (n == -1)
+		ft_putstr_fd("Invalid arguments. Usage: ./so_long <map.ber>\n", 2);
 	if (n == 0)
 		write(2, "Empty map\n", 10);
 	else if (n == 1)

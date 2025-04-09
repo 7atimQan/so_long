@@ -1,6 +1,6 @@
 NAME = so_long
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 LIBFT_DIR    = libft
 PRINTF_DIR   = ft_printf
@@ -17,7 +17,7 @@ MLX = -L/home/hqannouc/minilibx-linux -lmlx -lX11 -lXext
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(LIBFT) $(PRINTF) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(MLX) $(LIBFT) $(PRINTF)
 
 $(LIBFT):
@@ -26,15 +26,21 @@ $(LIBFT):
 $(PRINTF):
 	make -C $(PRINTF_DIR)
 
-%.o: %.c
+%.o: %.c so_long.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
+	make -C libft clean
+	make -C ft_printf clean
 
 fclean: clean
 	rm -f $(NAME)
-
-mc : all clean
+	make -C libft fclean
+	make -C ft_printf fclean
 
 re: fclean all
+
+.PHONY: all clean fclean re
+
+.SECONDARY: $(OBJS)
